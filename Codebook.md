@@ -1,4 +1,4 @@
-### Getting and Cleaning Data - Project Codebook
+## Getting and Cleaning Data - Project Codebook
 
 This codebook describes the dataset output contained in tidydata.csv which is produced by the run_analysis() function created for the project.
 
@@ -13,17 +13,27 @@ Data has been downloaded from the ff. url: https://d396qusza40orc.cloudfront.net
 The data in tidydata.csv contains the average (mean) for all variables referring to mean and standard deviation for activities performed by all subjects from the source data.
 
 To come up with this data, the ff. steps were taken:
+
 1. The ff. files were read from the data source
-*'features.txt': List of all measurements taken
-*'activity_labels.txt': List of all activities performed by subjects along with their reference ID
 
-*'train/X_train.txt': The training observations
-*'train/y_train.txt': The activities performed for the observations in the training data
-*'train/subject_train.txt': The subjects performing the activities for the observations in the training data
+  * 'features.txt': List of all measurements taken
+  * 'activity_labels.txt': List of all activities performed by subjects along with their reference ID
 
-*'test/X_test.txt': The test observations
-*'test/y_test.txt': The activities performed for the observations in the test data
-*'test/subject_test.txt': The subjects performing the activities for the observations in the test data
+  * 'train/X_train.txt': The training observations
+  * 'train/y_train.txt': The activities performed for the observations in the training data
+  * 'train/subject_train.txt': The subjects performing the activities for the observations in the training data
+
+  * 'test/X_test.txt': The test observations
+  * 'test/y_test.txt': The activities performed for the observations in the test data
+  * 'test/subject_test.txt': The subjects performing the activities for the observations in the test data
+
+2. The train and test data were merged into a single dataset by putting the activities, and subjects as additional columns and then binding the train and test sets together. Sample code is found below
+
+```
+test <- cbind(testSubject, testActivities, testData)
+train <- cbind(trainSubject, trainActivities, trainData)
+mergedData <- rbind(test, train)
+```
 
 
 ### List of Variables
