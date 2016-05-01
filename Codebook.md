@@ -31,24 +31,24 @@ To come up with this data, the ff. steps were taken:
 
 3. The train and test data were merged into a single dataset called `mergedData` by putting the activities, and subjects as additional columns and then binding the train and test sets together. Sample code is found below.
 
-```
-test <- cbind(testSubject, testActivities, testData)
-train <- cbind(trainSubject, trainActivities, trainData)
-mergedData <- rbind(test, train)
-```
+  ```
+  test <- cbind(testSubject, testActivities, testData)
+  train <- cbind(trainSubject, trainActivities, trainData)
+  mergedData <- rbind(test, train)
+  ```
 
 4. From the merged dataset, a new one called `mergedMeanStd` was created with the subjectID, activityID columns and measurements with Mean() and Std() in their column names.
 
-```
-meanStdCols <- grep("mean\\(\\)|std\\(\\)", names(mergedData))
-mergedMeanStd <- mergedData[, c(1, 2, meanStdCols)]
-```
+  ```
+  meanStdCols <- grep("mean\\(\\)|std\\(\\)", names(mergedData))
+  mergedMeanStd <- mergedData[, c(1, 2, meanStdCols)]
+  ```
 
 5. Descriptive activity names were put into the `mergedMeanStd` by joining the dataset with the `activities` data using the `activityID` as reference.
 
-```
-mergedMeanStd <- tbl_df(merge(activities, mergedMeanStd) %>% select(-activityID))
-```
+  ```
+  mergedMeanStd <- tbl_df(merge(activities, mergedMeanStd) %>% select(-activityID))
+  ```
 
 6. The column names of `mergedMeanStd` were cleaned up using the substitutions below:
 
@@ -64,15 +64,15 @@ mergedMeanStd <- tbl_df(merge(activities, mergedMeanStd) %>% select(-activityID)
   
 6. A smaller dataset called `dataSummary` with the the average of each variable for each activity and each subject was created by grouping the `mergedMeanStd` dataset by activityName and subjectID and then running a summary on it. Code for this is found below.
 
-```
-dataSummary <- group_by(mergedMeanStd, activityName, subjectID) %>% summarize_each(funs(mean))
-```
+  ```
+  dataSummary <- group_by(mergedMeanStd, activityName, subjectID) %>% summarize_each(funs(mean))
+  ```
 
 7. Finally, `dataSummary` was written into a file named tidydata.csv with comma used as separator
 
-```
-write.table(dataSummary, file="tidyData.csv", row.name=FALSE, sep = ",")
-```
+  ```
+  write.table(dataSummary, file="tidyData.csv", row.name=FALSE, sep = ",")
+  ```
   
 ### List of Variables
 
